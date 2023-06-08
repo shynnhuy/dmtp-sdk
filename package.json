@@ -4,7 +4,7 @@
   "description": "DMTP sdk for react",
   "author": "dmtp",
   "license": "MIT",
-  "repository": "DMTP-Protocol/DMTP-SDK-REACT",
+  "repository": "shynnhuy/dmtp-sdk",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",

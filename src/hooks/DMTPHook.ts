@@ -1,9 +1,11 @@
+/* eslint-disable camelcase */
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { KeyPairDMTP, MessageDMTP } from '../core'
 import DMTPContext from '../providers/DMTPProvider'
 import ApiServices from '../services/api'
 import { io } from 'socket.io-client'
 import { ethers } from 'ethers'
+import { compareString } from '../utils'
 
 const getOrCreateDMTPKeyPair = async ({
   setDMTPKeyPair,
@@ -228,17 +230,20 @@ const useConnectDMTP = () => {
       )
       const [, setSignatureData] = signatureState
       if (
-        addressRecover.toLowerCase() == address.toLowerCase() &&
-        addressFromLocal.toLowerCase() == address.toLowerCase()
+        compareString(addressRecover, address) &&
+        compareString(addressFromLocal, address)
       ) {
         setSignatureData({
           signature: signFromLocal,
           message: addressFromLocal
         })
-        const res = await ApiServices.getKeyPair(APIKey, address)
+        const res = await ApiServices.getKeyPair<{
+          private_key: string
+          public_key: string
+        }>(APIKey, address)
         const result = res.data.data
         if (result) {
-          const { private_key, public_key } = result as any
+          const { private_key, public_key } = result
 
           const payload = {
             privateKey: KeyPairDMTP.decryptDMTPPrivateKey(

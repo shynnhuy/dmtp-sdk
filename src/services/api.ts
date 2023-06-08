@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+// eslint-disable-next-line no-unused-vars
 import { Axios, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 type SuccessResponse<T> = {
@@ -51,8 +53,8 @@ const ApiServices = {
         payload: `${message}:${signature}:${api_key}`
       }
     }),
-  getKeyPair: (api_key: string, address: string) =>
-    AxiosGet('key-pair', {
+  getKeyPair: <T extends unknown>(api_key: string, address: string) =>
+    AxiosGet<T>('key-pair', {
       headers: {
         api_key
       },
