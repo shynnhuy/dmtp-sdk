@@ -114,6 +114,7 @@ const getOrCreateDMTPKeyPair = async ({
       console.error(
         `[DMTP SDK][useDMTPKeyPair][getDMTPKeyPair] error: ${error}`
       )
+    throw error
   }
 }
 
@@ -430,7 +431,6 @@ const useSNS = () => {
       socketDisconnect()
     }
   }, [APIKey, signatureData])
-
 
   const socketListen = useCallback(
     (event: string, listener: (...args: any[]) => void) => {
